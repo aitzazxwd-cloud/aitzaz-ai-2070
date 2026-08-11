@@ -75,3 +75,23 @@ abstraction. To make chat actually respond:
 Check configuration anytime: http://localhost:3000/api/status
 
 Without a key, the chat shows an honest "not configured" message — nothing is faked.
+
+## Phase 3 — Chat + database persistence
+
+Chat now persists conversations and messages. Two honest modes:
+
+- **PostgreSQL** (real persistence): set `DATABASE_URL` in `.env.local`
+  (Supabase direct connection string works). Tables are created
+  automatically on first request.
+- **Memory (session)**: no `DATABASE_URL` → data lives only while the
+  server runs. The UI badge shows "DB · Memory (session)" so you always
+  know what is actually happening.
+
+API endpoints:
+- `GET /api/conversations` — list chats
+- `POST /api/conversations` — create chat
+- `GET /api/conversations/[id]/messages` — history
+- `POST /api/chat` — chat (persists user + assistant messages)
+
+The Assistant page has a conversation sidebar: new chat, history, and
+automatic saving of every message.

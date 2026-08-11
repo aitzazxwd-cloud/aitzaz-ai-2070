@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { storeMode } from "@/lib/db/store";
 
 export const runtime = "nodejs";
 
@@ -15,9 +16,11 @@ export async function GET() {
       process.env.CUSTOM_AI_BASE_URL?.trim(),
   );
 
+  const dbConfigured = Boolean(process.env.DATABASE_URL?.trim());
+
   return NextResponse.json({
     app: "AITZAZ AI 2070",
-    phase: 2,
+    phase: 3,
     ai: {
       provider: process.env.AI_PROVIDER?.trim() || "openai",
       configured: aiConfigured,
@@ -26,7 +29,11 @@ export async function GET() {
         : "No AI key configured yet — chat will not respond until you add one to .env.local.",
     },
     database: {
-      configured: Boolean(process.env.SUPABASE_URL?.trim()),
+      configured: dbConfigured,
+      mode: storeMode(),
+      note: dbConfigured
+        ? "PostgreSQL connected via DATABASE_URL."
+        : "No DATABASE_URL set — chat is persisted in memory only (session).",
       phase: 3,
     },
     voice: { phase: 11, note: "Not wired yet — arrives in Phase 11." },
