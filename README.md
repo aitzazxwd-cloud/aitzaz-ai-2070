@@ -52,3 +52,26 @@ src/
     └── ai/             # swappable AI provider abstraction (Phase 2)
 docs/                   # architecture + roadmap
 ```
+
+## Phase 2 — Real AI Brain (live chat)
+
+The AI Assistant now calls a real server-side AI provider through a clean
+abstraction. To make chat actually respond:
+
+1. Create your env file:
+   ```bash
+   cp .env.example .env.local
+   ```
+2. Open `.env.local` and set ONE provider:
+   - `AI_PROVIDER=openai` + `OPENAI_API_KEY=sk-...`
+   - or `AI_PROVIDER=anthropic` + `ANTHROPIC_API_KEY=...`
+   - or `AI_PROVIDER=custom` + `CUSTOM_AI_BASE_URL=...` (local models)
+3. Restart the dev server:
+   ```bash
+   npm run dev
+   ```
+4. Open http://localhost:3000/assistant and chat.
+
+Check configuration anytime: http://localhost:3000/api/status
+
+Without a key, the chat shows an honest "not configured" message — nothing is faked.
