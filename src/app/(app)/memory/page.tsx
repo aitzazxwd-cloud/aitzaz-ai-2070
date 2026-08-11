@@ -1,6 +1,5 @@
 import { Database } from "lucide-react";
 import { SectionPage, GlassCard } from "@/components/shell/SectionPage";
-import { MemoryStore } from "@/lib/memory/types";
 
 export default function MemoryPage() {
   return (
